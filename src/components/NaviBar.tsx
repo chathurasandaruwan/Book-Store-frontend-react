@@ -1,5 +1,5 @@
 import {useState} from "react";
-// import { Link } from "react-router"
+import { Link } from "react-router"
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 interface NavbarProps {
     onCartClick: () => void;
@@ -7,7 +7,7 @@ interface NavbarProps {
 export function NaviBar ({ onCartClick }: NavbarProps) {
     const [isOpen, setIsOpen] = useState(false)
     const menuItems = [
-        { title: "Home", href: " " },
+        { title: "Home", href: "" },
         { title: "Books", href: "books" },
         { title: "Categories", href: "categories" },
         { title: "About", href: "about" },
@@ -23,14 +23,14 @@ export function NaviBar ({ onCartClick }: NavbarProps) {
 
                     <div className="hidden md:flex space-x-4">
                         {menuItems.map((item) => (
-                            /*<Link key={item.title} to={item.href}
-                               className="text-white hover:text-gray-300 transition-colors">
+                            <Link key={item.title} to={item.href}
+                               className="text-white hover:text-gray-300 transition-colors hover:underline ">
                                 {item.title}
-                            </Link>*/
-                            <a key={item.title} href={item.href}
+                            </Link>
+                            /*<a key={item.title} href={item.href}
                                className="text-white hover:text-gray-300 transition-colors hover:underline">
                                 {item.title}
-                            </a>
+                            </a>*/
                         ))}
                     </div>
                     <div
