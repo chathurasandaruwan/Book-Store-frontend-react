@@ -3,16 +3,13 @@ import { useLocation } from "react-router"
 import {NaviBar} from "./NaviBar.tsx";
 
 export function RootLayout() {
-  const location = useLocation()
+    const location = useLocation()
 
-  console.log(location.pathname)
-
-  return (
-      <>
-        <NaviBar onCartClick={()=>{console.log("clicked")}}/>
-        <Outlet />
+    console.log(location.pathname)
+    return (
+        <>
+            <NaviBar/>
+            <Outlet />
       </>
-
-
-  )
+    )
 }
