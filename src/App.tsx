@@ -1,12 +1,11 @@
 import './App.css'
+import {NaviBar} from "./components/NaviBar.tsx";
 
 function App() {
   return (
-    <>
-      <h1>
-        Hello world!
-      </h1>
-    </>
+      <>
+      <NaviBar></NaviBar>
+      </>
   )
 }
 
