@@ -1,14 +1,18 @@
 import {useState} from "react";
-
-export function NaviBar() {
+// import { Link } from "react-router"
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+interface NavbarProps {
+    onCartClick: () => void;
+}
+export function NaviBar ({ onCartClick }: NavbarProps) {
     const [isOpen, setIsOpen] = useState(false)
-
     const menuItems = [
-        { title: "Dashboard", href: "#" },
-        { title: "Inventory", href: "#" },
-        { title: "Sales", href: "#" },
-        { title: "Settings", href: "#" },
+        { title: "Home", href: " " },
+        { title: "Books", href: "books" },
+        { title: "Categories", href: "categories" },
+        { title: "About", href: "about" },
     ]
+    const itemCount = 0
     return (
         <nav className="glass-effect sticky top-0 z-50">
             <div className="container mx-auto px-4">
@@ -19,11 +23,27 @@ export function NaviBar() {
 
                     <div className="hidden md:flex space-x-4">
                         {menuItems.map((item) => (
-                            <a key={item.title} href={item.href}
+                            /*<Link key={item.title} to={item.href}
                                className="text-white hover:text-gray-300 transition-colors">
+                                {item.title}
+                            </Link>*/
+                            <a key={item.title} href={item.href}
+                               className="text-white hover:text-gray-300 transition-colors hover:underline">
                                 {item.title}
                             </a>
                         ))}
+                    </div>
+                    <div
+                        className="relative cursor-pointer bg-white p-2 rounded-full hover:bg-gray-300 transition-colors"
+                        onClick={onCartClick}
+                    >
+                        <ShoppingCartIcon className="h-6 w-6 hover:scale-110"/>
+                        {itemCount > 0 && (
+                            <span
+                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                                {itemCount}
+                            </span>
+                        )}
                     </div>
                     <div className="md:hidden">
                         <button
@@ -69,7 +89,7 @@ export function NaviBar() {
                                 className="block text-white hover:text-gray-300 py-2"
                                 onClick={() => setIsOpen(false)}
                             >
-                                {item.title}
+                            {item.title}
                             </a>
                         ))}
                     </div>
