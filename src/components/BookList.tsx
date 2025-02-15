@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
+import BookDetails from "./BookDetails.tsx";
 
 const BookList: React.FC = () => {
+    const [selectedBook, setSelectedBook] = useState<any | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const books = [
         {
             id: 1,
@@ -39,6 +42,10 @@ const BookList: React.FC = () => {
             stock: 2,
         },
     ];
+    const handleViewBook = (book: any) => {
+        setSelectedBook(book);
+        setIsModalOpen(true);
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -57,11 +64,10 @@ const BookList: React.FC = () => {
                             <h2 className="text-xl font-semibold mb-1">{book.title}</h2>
                             <p className="text-gray-600 mb-1">by {book.author}</p>
                             <p className="text-blue-600 font-bold mb-2">${book.price.toFixed(2)}</p>
-                            {/*<p className="text-sm text-gray-500 mb-4">{book.description}</p>*/}
                             <p className="absolute bottom-16 right-6 text-sm text-gray-600 mb-4">Stock: {book.stock}</p>
                             <div className="flex justify-between">
                                 <button
-                                    onClick={() => {console.log(book.id)}}
+                                    onClick={() => handleViewBook(book)}
                                     className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors"
                                 >
                                     View
@@ -76,6 +82,11 @@ const BookList: React.FC = () => {
                         </div>
                     </div>
                 ))}
+                <BookDetails
+                    book={selectedBook}
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />
             </div>
         </div>
     );
