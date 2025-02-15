@@ -17,7 +17,7 @@ export function NaviBar () {
     const itemCount = 0
     return (
         <>
-            <nav className="shadow-lg sticky top-0 z-50 bg-gradient-to-b from-blue-200 to-blue-500">
+            <nav className=" fixed shadow-lg sticky top-0 z-50 bg-gradient-to-b from-gray-500 to-black">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
                         <a href="/" className="text-2xl font-serif text-white">
