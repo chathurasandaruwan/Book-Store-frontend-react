@@ -1,3 +1,5 @@
+import {TitleBar} from "../components/TitleBar.tsx";
+
 export function Dashboard() {
     return (
         <section className='min-h-screen'>
@@ -32,7 +34,7 @@ export function Dashboard() {
                 </main>
             </div>
             <div>
-
+                <TitleBar>Popular Books</TitleBar>
             </div>
         </section>
     );
