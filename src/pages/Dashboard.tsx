@@ -1,4 +1,5 @@
 import {TitleBar} from "../components/TitleBar.tsx";
+import BookList from "../components/BookList.tsx";
 
 export function Dashboard() {
     return (
@@ -33,8 +34,9 @@ export function Dashboard() {
                     </div>
                 </main>
             </div>
-            <div>
-                <TitleBar>Popular Books</TitleBar>
+            <div className='bg-gray-200 p-4'>
+                <TitleBar>Most Popular Books</TitleBar>
+                <BookList></BookList>
             </div>
         </section>
     );
