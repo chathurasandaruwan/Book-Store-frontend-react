@@ -1,5 +1,6 @@
 import {TitleBar} from "../components/TitleBar.tsx";
 import BookList from "../components/BookList.tsx";
+import AboutUs from "../components/AboutUs.tsx";
 
 export function Dashboard() {
     return (
@@ -37,6 +38,8 @@ export function Dashboard() {
             <div className='bg-gray-200 p-4'>
                 <TitleBar>Most Popular Books</TitleBar>
                 <BookList></BookList>
+                <TitleBar>About Us</TitleBar>
+                <AboutUs></AboutUs>
             </div>
         </section>
     );
