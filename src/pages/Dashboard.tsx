@@ -1,6 +1,7 @@
 import {TitleBar} from "../components/TitleBar.tsx";
 import BookList from "../components/BookList.tsx";
 import AboutUs from "../components/AboutUs.tsx";
+import Footer from "../components/Footer.tsx";
 
 export function Dashboard() {
     return (
@@ -41,6 +42,7 @@ export function Dashboard() {
                 <TitleBar>About Us</TitleBar>
                 <AboutUs></AboutUs>
             </div>
+            <Footer/>
         </section>
     );
 }
