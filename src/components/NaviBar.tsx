@@ -17,7 +17,7 @@ export function NaviBar () {
     const itemCount = 0
     return (
         <>
-            <nav className="glass-effect sticky top-0 z-50">
+            <nav className="shadow-lg sticky top-0 z-50 bg-gradient-to-b from-blue-200 to-blue-500">
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between h-16">
                         <a href="/" className="text-2xl font-serif text-white">
@@ -27,7 +27,7 @@ export function NaviBar () {
                         <div className="hidden md:flex space-x-4">
                             {menuItems.map((item) => (
                                 <Link key={item.title} to={item.href}
-                                      className="text-white hover:text-gray-300 transition-colors hover:underline ">
+                                      className="text-white hover:text-gray-500 transition-colors transition ease-in-out duration-800 hover:underline hover:underline-offset-4 ">
                                     {item.title}
                                 </Link>
                             ))}
@@ -85,7 +85,7 @@ export function NaviBar () {
                                 <Link
                                     key={item.title}
                                     to={item.href}
-                                    className="block text-white hover:text-gray-300 py-2"
+                                    className="block text-white hover:text-gray-500 py-2"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {item.title}

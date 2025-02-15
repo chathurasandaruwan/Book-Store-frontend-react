@@ -32,7 +32,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
         >
             <div className="p-4 h-full flex flex-col">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-blue-600">Your Cart</h2>
+                    <h2 className="text-2xl font-bold text-blue-500">Your Cart</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -97,7 +97,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                         className={`w-full py-3 rounded transition-colors ${
                             items.length === 0
                                 ? 'bg-gray-300 cursor-not-allowed'
-                                : 'bg-blue-600 hover:bg-blue-700 text-white'
+                                : 'bg-blue-500 hover:bg-blue-700 text-white'
                         }`}
                     >
                         Checkout

@@ -1,5 +1,5 @@
 export function Dashboard() {
     return (
-        <>dashboard</>
+        <div className={'bg-blue-500 '}>dashboard</div>
     );
 }
