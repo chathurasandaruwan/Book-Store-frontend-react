@@ -12,7 +12,7 @@ export function NaviBar () {
         { title: "Home", href: "" },
         { title: "Books", href: "books" },
         { title: "Categories", href: "categories" },
-        { title: "About", href: "about" },
+        { title: "Contact-Us", href: "contactUs" },
     ]
     const itemCount = 0
     return (

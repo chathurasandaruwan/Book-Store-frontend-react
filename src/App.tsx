@@ -4,7 +4,7 @@ import {RootLayout} from "./components/RootLayout.tsx";
 import {Dashboard} from "./pages/Dashboard.tsx";
 import {Books} from "./pages/Books.tsx";
 import {Categories} from "./pages/Categories.tsx";
-import {About} from "./pages/About.tsx";
+import {ContactUs} from "./pages/ContactUs.tsx";
 
 function App() {
     const routes = createBrowserRouter([
@@ -15,7 +15,7 @@ function App() {
                 { path: "", element: <Dashboard /> },
                 { path: "/books", element: <Books /> },
                 { path: "/categories", element: <Categories /> },
-                { path: "/about", element: <About /> }
+                { path: "/contactUs", element: <ContactUs /> }
             ]
         }
     ])
