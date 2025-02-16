@@ -1,7 +1,7 @@
 import AboutUs from "../components/AboutUs.tsx";
 import {TitleBar} from "../components/TitleBar.tsx";
 import { EnvelopeIcon, PhoneIcon, MapPinIcon } from "@heroicons/react/24/outline"
-import {useState} from "react";
+import React,{useState} from "react";
 
 export function ContactUs() {
     const [formData, setFormData] = useState({
