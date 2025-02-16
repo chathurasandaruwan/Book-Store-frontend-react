@@ -18,10 +18,19 @@ import {
 } from '@heroicons/react/24/outline';
 import {useState} from "react";
 import {TitleBar} from "../components/TitleBar.tsx";
-
+import PaginatedBookList from "../components/PaginatedBookList.tsx";
+interface BookProps {
+    id: number;
+    title: string;
+    author: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+    stock: number;
+}
 export function Categories() {
-    const [selectedCategory, setSelectedCategory] = useState<string | null>('Educational & Academic');
-
+    const [selectedCategory, setSelectedCategory] = useState<string | null>();
+    const [filteredBooks, setFilteredBooks] = useState<BookProps[]>([]);
     const categories = [
         { name: 'Educational & Academic', icon: AcademicCapIcon },
         { name: 'Children\'s Books', icon: BookOpenIcon },
@@ -156,8 +165,9 @@ export function Categories() {
     }
     function handleCategoryClick(name: string) {
         setSelectedCategory(name);
-        const filteredBooks = filterBooksByCategory(name);
-        console.log(filteredBooks)
+        const result: BookProps[] = filterBooksByCategory(name);
+        console.log(result);
+        setFilteredBooks(result)
     }
     return (
         <section className='bg-gray-200'>
@@ -181,7 +191,8 @@ export function Categories() {
                 </div>
                 {/*content*/}
                 <div className='mb-12'>
-                    <TitleBar>{selectedCategory || 'Educational & Academic'}</TitleBar>
+                    <TitleBar>{selectedCategory || 'Select a category'}</TitleBar>
+                    <PaginatedBookList books={filteredBooks} itemsPerPage={4} />
                 </div>
             </div>
             <Footer/>
