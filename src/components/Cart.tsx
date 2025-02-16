@@ -18,10 +18,17 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
         {
             id: '1',
             title: 'Book 1',
-            imageUrl: 'src/assets/react.svg',
+            imageUrl: 'src/assets/home-bg.jpg',
             price: 9.99,
-            quantity: 1,
-        }
+            quantity: 3,
+        },
+        {
+            id: '2',
+            title: 'Book 2',
+            imageUrl: 'src/assets/home-bg.jpg',
+            price: 19.99,
+            quantity: 2,
+        },
     ];
     const total = 12.97;
     return (
@@ -32,7 +39,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
         >
             <div className="p-4 h-full flex flex-col">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-bold text-blue-500">Your Cart</h2>
+                    <h2 className="text-2xl font-bold text-black">Your Cart</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -53,7 +60,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                                 <img
                                     src={item.imageUrl}
                                     alt={item.title}
-                                    className="w-20 h-20 object-cover rounded"
+                                    className="w-30 h-20 object-cover rounded"
                                 />
                                 <div className="flex-grow">
                                     <h3 className="font-semibold">{item.title}</h3>
@@ -61,14 +68,14 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                                     <div className="flex items-center gap-2 mt-2">
                                         <button
                                             onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors hover:cursor-pointer"
                                         >
                                             -
                                         </button>
                                         <span>{item.quantity}</span>
                                         <button
                                             onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors"
+                                            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors hover:cursor-pointer"
                                         >
                                             +
                                         </button>
@@ -77,7 +84,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                                 <button
                                     onClick={() => {
                                         console.log('remove',item.id)}}
-                                    className="text-red-500 hover:text-red-700 transition-colors"
+                                    className="text-red-500 hover:text-red-700 transition-colors hover:cursor-pointer"
                                 >
                                     Remove
                                 </button>
@@ -97,7 +104,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                         className={`w-full py-3 rounded transition-colors ${
                             items.length === 0
                                 ? 'bg-gray-300 cursor-not-allowed'
-                                : 'bg-blue-500 hover:bg-blue-700 text-white'
+                                : 'bg-black hover:bg-white hover:text-black border border-black text-white hover:cursor-pointer'
                         }`}
                     >
                         Checkout
