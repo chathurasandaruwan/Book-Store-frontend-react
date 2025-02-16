@@ -166,7 +166,6 @@ export function Categories() {
     function handleCategoryClick(name: string) {
         setSelectedCategory(name);
         const result: BookProps[] = filterBooksByCategory(name);
-        console.log(result);
         setFilteredBooks(result)
     }
     return (
@@ -192,7 +191,9 @@ export function Categories() {
                 {/*content*/}
                 <div className='mb-12'>
                     <TitleBar>{selectedCategory || 'Select a category'}</TitleBar>
-                    <PaginatedBookList books={filteredBooks} itemsPerPage={4} />
+                    {filteredBooks.length > 0 ?
+                        <PaginatedBookList books={filteredBooks} itemsPerPage={4} /> : <p className='text-2xl font-bold text-gray-600 text-center mt-4'>No books found in this category.</p>
+                    }
                 </div>
             </div>
             <Footer/>
