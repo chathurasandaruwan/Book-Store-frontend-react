@@ -1,52 +1,26 @@
 import React, {useState} from 'react';
 import BookDetails from "./BookDetails.tsx";
+interface BookProps {
+    id: number;
+    title: string;
+    author: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+    stock: number;
+}
 
-const BookList: React.FC = () => {
+interface BookListProps {
+    books: BookProps[];
+}
+
+const BookList: React.FC<BookListProps> = ({ books }) => {
     const [selectedBook, setSelectedBook] = useState<any | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const books = [
-        {
-            id: 1,
-            title: 'Book 1',
-            author: 'Author 1',
-            price: 9.99,
-            description: 'Description 1',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 10,
-        },
-        {
-            id: 2,
-            title: 'Book 2',
-            author: 'Author 2',
-            price: 19.99,
-            description: 'Description 2',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 5,
-        },
-        {
-            id: 3,
-            title: 'Book 3',
-            author: 'Author 3',
-            price: 29.99,
-            description: 'Description 3',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 3,
-        },
-        {
-            id: 4,
-            title: 'Book 4',
-            author: 'Author 4',
-            price: 39.99,
-            description: 'Description 4',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 2,
-        },
-    ];
     const handleViewBook = (book: any) => {
         setSelectedBook(book);
         setIsModalOpen(true);
     };
-
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">

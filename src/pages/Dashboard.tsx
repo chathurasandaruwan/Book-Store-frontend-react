@@ -4,6 +4,44 @@ import AboutUs from "../components/AboutUs.tsx";
 import Footer from "../components/Footer.tsx";
 
 export function Dashboard() {
+    const books = [
+        {
+            id: 1,
+            title: 'Book 1',
+            author: 'Author 1',
+            price: 9.99,
+            description: 'Description 1',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 10,
+        },
+        {
+            id: 2,
+            title: 'Book 2',
+            author: 'Author 2',
+            price: 19.99,
+            description: 'Description 2',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 5,
+        },
+        {
+            id: 3,
+            title: 'Book 3',
+            author: 'Author 3',
+            price: 29.99,
+            description: 'Description 3',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 3,
+        },
+        {
+            id: 4,
+            title: 'Book 4',
+            author: 'Author 4',
+            price: 39.99,
+            description: 'Description 4',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 2,
+        },
+    ];
     return (
         <section className='min-h-screen'>
             <div className='bg-[url("src/assets/home-bg.jpg")] bg-cover bg-center h-[80vh] pt-4'>
@@ -38,7 +76,7 @@ export function Dashboard() {
             </div>
             <div className='bg-gray-200 p-4'>
                 <TitleBar>Most Popular Books</TitleBar>
-                <BookList></BookList>
+                <BookList books={books}></BookList>
                 <TitleBar>About Us</TitleBar>
                 <AboutUs></AboutUs>
             </div>
