@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate} from "react-router";
 
 const Footer: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <footer className="bg-gray-800 text-white py-8">
             <div className="container mx-auto px-4">
@@ -15,16 +17,20 @@ const Footer: React.FC = () => {
                         <h3 className="text-xl font-bold mb-4">Quick Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <a href="#" className="text-gray-200 hover:text-white transition-colors">Home</a>
+                                <a href="#" className="text-gray-200 hover:text-white transition-colors" onClick={() => navigate('/')}>Home</a>
+                                {/*<Link to='' className="text-gray-200 hover:text-white transition-colors">Home</Link>*/}
                             </li>
                             <li>
-                                <a href="#" className="text-gray-200 hover:text-white transition-colors">Books</a>
+                                <a href="#" className="text-gray-200 hover:text-white transition-colors" onClick={() => navigate('/books')}>Books</a>
+                                {/*<Link to='books' className="text-gray-200 hover:text-white transition-colors">Books</Link>*/}
                             </li>
                             <li>
-                                <a href="#" className="text-gray-200 hover:text-white transition-colors">Categories</a>
+                                <a href="#" className="text-gray-200 hover:text-white transition-colors"onClick={() => navigate('/categories')}>Categories</a>
+                                {/*<Link to='categories' className="text-gray-200 hover:text-white transition-colors">Categories</Link>*/}
                             </li>
                             <li>
-                                <a href="#" className="text-gray-200 hover:text-white transition-colors">About</a>
+                                <a href="#" className="text-gray-200 hover:text-white transition-colors" onClick={() => navigate('/contactUs')}>Contact-Us</a>
+                                {/*<Link to='contactUs' className="text-gray-200 hover:text-white transition-colors">Contact-Us</Link>*/}
                             </li>
                         </ul>
                     </div>
