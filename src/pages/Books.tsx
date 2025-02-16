@@ -1,6 +1,7 @@
 import BookList from "../components/BookList.tsx";
 import {TitleBar} from "../components/TitleBar.tsx";
 import Footer from "../components/Footer.tsx";
+import PaginatedBookList from "../components/PaginatedBookList.tsx";
 
 export function Books() {
     const popularBooks = [
@@ -102,7 +103,7 @@ export function Books() {
         },
     ];
     return (
-        <section>
+        <section className='bg-gray-200'>
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold mb-8">Book Collection</h1>
                 <div className="mb-12">
@@ -115,7 +116,7 @@ export function Books() {
                 </div>
                 <div>
                     <TitleBar>All Books</TitleBar>
-                    <BookList books={allBooks}/>
+                    <PaginatedBookList books={allBooks} itemsPerPage={8}/>
                 </div>
             </div>
             <Footer/>
