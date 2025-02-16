@@ -1,4 +1,6 @@
 import BookList from "../components/BookList.tsx";
+import {TitleBar} from "../components/TitleBar.tsx";
+import Footer from "../components/Footer.tsx";
 
 export function Books() {
     const popularBooks = [
@@ -79,22 +81,44 @@ export function Books() {
             description: 'Description 8',
             imageUrl: '/src/assets/home-bg.jpg',
             stock: 7,
-        }];
+        },
+        {
+            id: 9,
+            title: 'Book 9',
+            author: 'Author 9',
+            price: 89.99,
+            description: 'Description 9',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 9,
+        },
+        {
+            id: 10,
+            title: 'Book 10',
+            author: 'Author 10',
+            price: 99.99,
+            description: 'Description 10',
+            imageUrl: '/src/assets/home-bg.jpg',
+            stock: 6,
+        },
+    ];
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Book Collection</h1>
-            <section className="mb-12">
-                <h2 className="text-2xl font-semibold mb-4">Popular Books</h2>
-                <BookList books={popularBooks}/>
-            </section>
-            <section className="mb-12">
-                <h2 className="text-2xl font-semibold mb-4">Least Popular Books</h2>
-                <BookList books={leastPopularBooks}/>
-            </section>
-            <section>
-                <h2 className="text-2xl font-semibold mb-4">All Books</h2>
-                <BookList books={allBooks}/>
-            </section>
-        </div>
+        <section>
+            <div className="container mx-auto px-4 py-8">
+                <h1 className="text-4xl font-bold mb-8">Book Collection</h1>
+                <div className="mb-12">
+                    <TitleBar>Most Popular Books</TitleBar>
+                    <BookList books={popularBooks}/>
+                </div>
+                <div className="mb-12">
+                    <TitleBar>Least Popular Books</TitleBar>
+                    <BookList books={leastPopularBooks}/>
+                </div>
+                <div>
+                    <TitleBar>All Books</TitleBar>
+                    <BookList books={allBooks}/>
+                </div>
+            </div>
+            <Footer/>
+        </section>
     );
 }
