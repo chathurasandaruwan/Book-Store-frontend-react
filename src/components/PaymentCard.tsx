@@ -1,5 +1,3 @@
-
-
 interface paymentModelProps {
     isOpen: boolean;
     onClose: () => void;
@@ -18,6 +16,7 @@ export function PaymentCard({isOpen, onClose}: paymentModelProps) {
                         >
                             ✕
                         </button>
+                        <h2 className="mb-6 text-3xl font-bold text-gray-800">Payment Page</h2>
                     </div>
                 </div>
             </div>
