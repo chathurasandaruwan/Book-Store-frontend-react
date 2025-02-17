@@ -3,8 +3,9 @@ import React, { useState } from "react"
 interface AuthModelProps {
     isOpen: boolean;
     onClose: () => void;
+    action: () => void;
 }
-export default function Auth({isOpen, onClose}:AuthModelProps) {
+export default function Auth({isOpen, onClose , action}:AuthModelProps) {
     const [isFlipped, setIsFlipped] = useState(false)
     /*console.log("Auth isOpen", isOpen)*/
     const [singUpData, setSingUpData] = useState({name: "", email: "", password: ""})
@@ -29,10 +30,16 @@ export default function Auth({isOpen, onClose}:AuthModelProps) {
     const handleSubmitSingUp = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log("Form submitted:", singUpData)
+        setSingUpData({name: "", email: "", password: ""})
+        onClose();
+        action();
     }
     const handleSubmitSignIn = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log("Form submitted:", signInData)
+        setSignInData({email: "", password: ""})
+        onClose();
+        action();
     }
 
 

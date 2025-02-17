@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Auth from "./Auth.tsx";
+import {PaymentCard} from "./PaymentCard.tsx";
 
 interface CartProps {
     isOpen: boolean;
@@ -8,6 +9,7 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const [isAuthPageOpen, setIsAuthPageOpen] = useState(false);
+    const [isSignIn, setIsSignIn] = useState(false);
     const handleQuantityChange = (id: string, quantity: number) => {
         if (quantity < 1) return;
         console.log('handleQuantityChange',id,quantity)
@@ -115,7 +117,8 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                     </div>
                 </div>
             </div>
-            <Auth isOpen={isAuthPageOpen} onClose={() => setIsAuthPageOpen(false)}/>
+            <Auth isOpen={isAuthPageOpen} onClose={() => setIsAuthPageOpen(false)} action={()=>setIsSignIn(true)}/>
+            <PaymentCard isOpen={isSignIn} onClose={()=>setIsSignIn(false)}/>
         </div>
     );
 };
