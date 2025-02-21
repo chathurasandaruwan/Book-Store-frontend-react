@@ -16,21 +16,21 @@ import {
     NewspaperIcon,
     BookmarkIcon
 } from '@heroicons/react/24/outline';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TitleBar} from "../components/TitleBar.tsx";
 import PaginatedBookList from "../components/PaginatedBookList.tsx";
-interface BookProps {
-    id: number;
-    title: string;
-    author: string;
-    price: number;
-    description: string;
-    imageUrl: string;
-    stock: number;
-}
+import {Book} from "../interface/Book.ts";
+import {AppDispatch, RootState} from "../store/Store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {getBooksData} from "../Slices/BookSlice.ts";
 export function Categories() {
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(getBooksData());
+    }, [dispatch]);
     const [selectedCategory, setSelectedCategory] = useState<string | null>();
-    const [filteredBooks, setFilteredBooks] = useState<BookProps[]>([]);
+    const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
     const categories = [
         { name: 'Educational & Academic', icon: AcademicCapIcon },
         { name: 'Children\'s Books', icon: BookOpenIcon },
@@ -48,124 +48,13 @@ export function Categories() {
         { name: 'Magazines & Journals', icon: NewspaperIcon },
         { name: 'Fiction', icon: BookmarkIcon }
     ];
-    const allBooks = [
-        {
-            id: 1,
-            title: 'Book 1',
-            author: 'Author 1',
-            price: 9.99,
-            description: 'Description 1',
-            category: 'Educational & Academic',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 10,
-        },
-        {
-            id: 2,
-            title: 'Book 2',
-            author: 'Author 2',
-            price: 19.99,
-            description: 'Description 2',
-            category: 'Educational & Academic',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 5,
-        },
-        {
-            id: 3,
-            title: 'Book 3',
-            author: 'Author 3',
-            price: 29.99,
-            description: 'Description 3',
-            category: 'Educational & Academic',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 3,
-        },
-        {
-            id: 4,
-            title: 'Book 4',
-            author: 'Author 4',
-            price: 39.99,
-            description: 'Description 4',
-            category: 'Educational & Academic',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 2,
-        },
-        {
-            id: 5,
-            title: 'Book 5',
-            author: 'Author 5',
-            price: 49.99,
-            description: 'Description 5',
-            category: 'Educational & Academic',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 1,
-        },
-        {
-            id: 6,
-            title: 'Book 6',
-            author: 'Author 6',
-            price: 59.99,
-            description: 'Description 6',
-            category: 'Children\'s Books',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-        {
-            id: 7,
-            title: 'Book 7',
-            author: 'Author 7',
-            price: 69.99,
-            description: 'Description 7',
-            category: 'Children\'s Books',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-        {
-            id: 8,
-            title: 'Book 8',
-            author: 'Author 8',
-            price: 79.99,
-            description: 'Description 8',
-            category: 'Children\'s Books',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-        {
-            id: 9,
-            title: 'Book 9',
-            author: 'Author 9',
-            price: 89.99,
-            description: 'Description 9',
-            category: 'Children\'s Books',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-        {
-            id: 10,
-            title: 'Book 10',
-            author: 'Author 10',
-            price: 99.99,
-            description: 'Description 10',
-            category: 'Children\'s Books',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-        {
-            id: 11,
-            title: 'Book 11',
-            author: 'Author 11',
-            price: 199.99,
-            description: 'Description 11',
-            category: 'History & Archaeology',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-    ];
+    const allBooks:Book[] = useSelector((state:RootState) => state.bookData.books);
     function filterBooksByCategory(category: string) {
         return allBooks.filter(book => book.category === category);
     }
     function handleCategoryClick(name: string) {
         setSelectedCategory(name);
-        const result: BookProps[] = filterBooksByCategory(name);
+        const result: Book[] = filterBooksByCategory(name);
         setFilteredBooks(result)
     }
     return (
