@@ -1,5 +1,6 @@
 import {AddToCart} from "../interface/AddToCart.ts";
 import {createSlice} from "@reduxjs/toolkit";
+import {toast} from "react-toastify";
 
 
 const initialState: AddToCart[] = [];
@@ -8,16 +9,15 @@ const AddToCartSlice = createSlice({
     name: "addToCart",
     initialState:{
         value: initialState,
-        loading: false,
     },
     reducers: {
         addToCart: (state, action) => {
-            state.loading = true
             state.value.push(action.payload);
-            state.loading = false
+            toast.success("Added to cart successfully!");
         },
         removeFromCart: (state, action) => {
             state.value = state.value.filter((item) => item.id !== action.payload);
+            toast.success("Removed from cart successfully!");
             return state
         },
         updateQuantity: (state, action) => {

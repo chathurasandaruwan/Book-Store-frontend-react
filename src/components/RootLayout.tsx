@@ -16,7 +16,7 @@ export function RootLayout() {
         <>
             <NaviBar/>
             {loading && <LoadingAnimation/>}
-            <ToastContainer />
+            <ToastContainer position={"bottom-right"} theme="dark"/>
             <Outlet />
       </>
     )
