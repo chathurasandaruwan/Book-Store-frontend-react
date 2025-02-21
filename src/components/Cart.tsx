@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Auth from "./Auth.tsx";
 import {PaymentCard} from "./PaymentCard.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../store/Store.ts";
 
 interface CartProps {
     isOpen: boolean;
@@ -17,22 +19,8 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const handleCheckout = () => {
         setIsAuthPageOpen(!isAuthPageOpen);
     };
-    const items = [
-        {
-            id: '1',
-            title: 'Book 1',
-            imageUrl: 'src/assets/home-bg.jpg',
-            price: 9.99,
-            quantity: 3,
-        },
-        {
-            id: '2',
-            title: 'Book 2',
-            imageUrl: 'src/assets/home-bg.jpg',
-            price: 19.99,
-            quantity: 2,
-        },
-    ];
+    const items = useSelector((state:RootState) => state.addToCard.value);
+
     const total = 12.97;
     return (
         <div>
@@ -62,7 +50,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                                     className="flex items-center gap-4 border-b border-gray-200 py-4 transition-transform hover:scale-[1.02]"
                                 >
                                     <img
-                                        src={item.imageUrl}
+                                        src={`data:image/jpeg;base64,${item.image}`}
                                         alt={item.title}
                                         className="w-30 h-20 object-cover rounded"
                                     />
