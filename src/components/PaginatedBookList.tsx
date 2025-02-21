@@ -1,20 +1,11 @@
 import { useState } from "react"
 import {BookCard} from "./BookCard.tsx";
 import BookDetails from "./BookDetails.tsx";
+import {Book} from "../interface/Book.ts";
 
-
-interface BookProps {
-    id: number;
-    title: string;
-    author: string;
-    price: number;
-    description: string;
-    imageUrl: string;
-    stock: number;
-}
 
 interface PaginatedBookListProps {
-    books: BookProps[]
+    books: Book[]
     itemsPerPage: number
 }
 
@@ -28,9 +19,9 @@ export default function PaginatedBookList({ books, itemsPerPage }: PaginatedBook
     const totalPages = Math.ceil(books.length / itemsPerPage)
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
-    const [selectedBook, setSelectedBook] = useState<any | null>(null);
+    const [selectedBook, setSelectedBook] = useState<Book | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleViewBook = (book: any) => {
+    const handleViewBook = (book: Book) => {
         setSelectedBook(book);
         setIsModalOpen(true);
     };

@@ -1,24 +1,16 @@
 import {BookCard} from "./BookCard.tsx";
 import React, {useState} from "react";
 import BookDetails from "./BookDetails.tsx";
-interface BookProps {
-    id: number;
-    title: string;
-    author: string;
-    price: number;
-    description: string;
-    imageUrl: string;
-    stock: number;
-}
+import {Book} from "../interface/Book.ts";
 
 interface BookListProps {
-    books: BookProps[];
+    books: Book[];
 }
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
-    const [selectedBook, setSelectedBook] = useState<any | null>(null);
+    const [selectedBook, setSelectedBook] = useState<Book | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const handleViewBook = (book: any) => {
+    const handleViewBook = (book: Book) => {
         setSelectedBook(book);
         setIsModalOpen(true);
     };

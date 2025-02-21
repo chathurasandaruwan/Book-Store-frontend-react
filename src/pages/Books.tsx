@@ -2,106 +2,23 @@ import BookList from "../components/BookList.tsx";
 import {TitleBar} from "../components/TitleBar.tsx";
 import Footer from "../components/Footer.tsx";
 import PaginatedBookList from "../components/PaginatedBookList.tsx";
+import {AppDispatch, RootState} from "../store/Store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {getBooksData} from "../Slices/BookSlice.ts";
+import {useEffect} from "react";
+import {Book} from "../interface/Book.ts";
 
 export function Books() {
-    const popularBooks = [
-        {
-            id: 1,
-            title: 'Book 1',
-            author: 'Author 1',
-            price: 9.99,
-            description: 'Description 1',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 10,
-        },
-        {
-            id: 2,
-            title: 'Book 2',
-            author: 'Author 2',
-            price: 19.99,
-            description: 'Description 2',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 5,
-        },
-        {
-            id: 3,
-            title: 'Book 3',
-            author: 'Author 3',
-            price: 29.99,
-            description: 'Description 3',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 3,
-        },
-        {
-            id: 4,
-            title: 'Book 4',
-            author: 'Author 4',
-            price: 39.99,
-            description: 'Description 4',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 2,
-        },
-    ];
+    const dispatch = useDispatch<AppDispatch>();
 
-    const leastPopularBooks = [
-        {
-            id: 5,
-            title: 'Book 5',
-            author: 'Author 5',
-            price: 49.99,
-            description: 'Description 5',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 1,
-        },
-        {
-            id: 6,
-            title: 'Book 6',
-            author: 'Author 6',
-            price: 59.99,
-            description: 'Description 6',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 0,
-        },
-    ];
-
-    const allBooks = [...popularBooks, ...leastPopularBooks,
-        {
-            id: 7,
-            title: 'Book 7',
-            author: 'Author 7',
-            price: 69.99,
-            description: 'Description 7',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 4,
-        },
-        {
-            id: 8,
-            title: 'Book 8',
-            author: 'Author 8',
-            price: 79.99,
-            description: 'Description 8',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 7,
-        },
-        {
-            id: 9,
-            title: 'Book 9',
-            author: 'Author 9',
-            price: 89.99,
-            description: 'Description 9',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 9,
-        },
-        {
-            id: 10,
-            title: 'Book 10',
-            author: 'Author 10',
-            price: 99.99,
-            description: 'Description 10',
-            imageUrl: '/src/assets/home-bg.jpg',
-            stock: 6,
-        },
-    ];
+    useEffect(() => {
+        dispatch(getBooksData());
+    }, [dispatch]);
+    const allBooks:Book[] = useSelector((state:RootState) => state.bookData.books);
+    const popularBooks = allBooks.filter(book => book.stock > 0).slice(0, 8);
+    const leastPopularBooks = allBooks
+        .filter(book => book.stock > 0 && book.stock < 5)
+        .slice(0, 4);
     return (
         <section className='bg-gray-200'>
             <div className="container mx-auto px-4 py-8">

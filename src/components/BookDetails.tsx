@@ -22,7 +22,7 @@ const BookDetail: React.FC<BookDetailModalProps> = ({ book, isOpen, onClose }) =
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="md:w-1/3">
                         <img
-                            src={book.imageUrl}
+                            src={`data:image/jpeg;base64,${book.image}`}
                             alt={book.title}
                             className="w-full h-auto rounded-lg shadow-md"
                         />
