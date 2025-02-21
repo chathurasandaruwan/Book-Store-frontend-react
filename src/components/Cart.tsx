@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import Auth from "./Auth.tsx";
 import {PaymentCard} from "./PaymentCard.tsx";
-import {useSelector} from "react-redux";
-import {RootState} from "../store/Store.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../store/Store.ts";
+import {removeFromCart, updateQuantity} from "../Slices/AddToCartSlice.ts";
 
 interface CartProps {
     isOpen: boolean;
@@ -12,15 +13,19 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const [isAuthPageOpen, setIsAuthPageOpen] = useState(false);
     const [isSignIn, setIsSignIn] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const items = useSelector((state:RootState) => state.addToCard.value);
+    const AllBooks = useSelector((state:RootState) => state.bookData.books);
+
     const handleQuantityChange = (id: string, quantity: number) => {
+        const stock:number = AllBooks.find((book) => book.id === id)?.stock || 0;
         if (quantity < 1) return;
-        console.log('handleQuantityChange',id,quantity)
+        if (quantity > stock) return;
+        dispatch(updateQuantity({ id, quantity }));
     };
     const handleCheckout = () => {
         setIsAuthPageOpen(!isAuthPageOpen);
     };
-    const items = useSelector((state:RootState) => state.addToCard.value);
-
     const total = 12.97;
     return (
         <div>
@@ -74,9 +79,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => {
-                                            console.log('remove', item.id)
-                                        }}
+                                        onClick={() => dispatch(removeFromCart(item.id))}
                                         className="text-red-500 hover:text-red-700 transition-colors hover:cursor-pointer"
                                     >
                                         Remove

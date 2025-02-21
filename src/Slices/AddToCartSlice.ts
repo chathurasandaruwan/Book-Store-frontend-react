@@ -20,8 +20,18 @@ const AddToCartSlice = createSlice({
             state.value = state.value.filter((item) => item.id !== action.payload);
             return state
         },
+        updateQuantity: (state, action) => {
+            const { id, quantity } = action.payload;
+            state.value = state.value.map((item) => {
+                if (item.id === id) {
+                    return { ...item, quantity };
+                }
+                return item;
+
+            });
+        },
     },
 });
 
-export const {addToCart,removeFromCart} = AddToCartSlice.actions;
+export const {addToCart,removeFromCart,updateQuantity} = AddToCartSlice.actions;
 export default AddToCartSlice.reducer

@@ -1,3 +1,6 @@
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../store/Store.ts";
+import {addToCart} from "../Slices/AddToCartSlice.ts";
 
 interface BookProps {
     title: string;
@@ -9,6 +12,14 @@ interface BookProps {
     onViewBook: (book: any) => void;
 }
 export function BookCard({ title, author, price, description, image, stock, onViewBook }: BookProps) {
+    const dispatch = useDispatch<AppDispatch>();
+    const AllBooks = useSelector((state:RootState) => state.bookData.books);
+    const handelAddToCart = ({title, price, image, stock}:{title: string, price: number, image: string, stock: number}) => {
+        if (stock > 0) {
+            const id = AllBooks.find((book) => book.title === title)?.id || '';
+            dispatch(addToCart({id, title, image, price, quantity: 1}));
+        }
+    }
     return (
         <div
             className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2"
@@ -26,15 +37,13 @@ export function BookCard({ title, author, price, description, image, stock, onVi
                 <div className="flex justify-between">
                     <button
                         onClick={() => onViewBook({title, author, price, description, image, stock})}
-                        className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors"
+                        className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors hover:cursor-pointer"
                     >
                         View
                     </button>
                     <button
-                        onClick={() => {
-                            console.log("add to cart");
-                        }}
-                        className="bg-black text-white px-4 py-2 rounded hover:bg-gray-300 hover:text-black transition-colors"
+                        onClick={()=> handelAddToCart({title, price, image, stock})}
+                        className={`px-4 py-2 rounded ${stock > 0 ? 'bg-black text-white hover:bg-gray-300 hover:text-black transition-colors hover:cursor-pointer' : 'bg-gray-500 text-white cursor-not-allowed'}`}
                     >
                         Add to Cart
                     </button>
