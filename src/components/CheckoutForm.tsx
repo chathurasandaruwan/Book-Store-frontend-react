@@ -1,7 +1,8 @@
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../store/Store.ts";
-import {useEffect} from "react";
+import {FormEvent, useEffect} from "react";
+import {confirmCardPayment, createPaymentIntent} from "../Slices/PaymentSlice.ts";
 
 export const CheckoutForm = () => {
     const stripe = useStripe()
@@ -9,7 +10,7 @@ export const CheckoutForm = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { loading, error, clientSecret } = useSelector((state: RootState) => state.payment)
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         if (!stripe || !elements || !clientSecret) return
 
@@ -20,58 +21,38 @@ export const CheckoutForm = () => {
     }
 
     useEffect(() => {
-        dispatch(createPaymentIntent());
+        dispatch(createPaymentIntent())
     }, [dispatch])
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="p-3 border rounded-md">
+            <div className="space-y-4">
                 <CardElement
                     options={{
                         style: {
                             base: {
                                 fontSize: "16px",
-                                color: "#424770",
+                                color: "#32325d",
+                                fontFamily: '"Inter", sans-serif',
                                 "::placeholder": {
                                     color: "#aab7c4",
                                 },
-                            },
-                            invalid: {
-                                color: "#9e2146",
+                                padding: "10px 0",
                             },
                         },
                     }}
+                    className='border-2 border-gray-300 rounded-md '
                 />
+                {error && <p className="text-red-500 text-sm z-5000">{error}</p>}
             </div>
             <button
                 type="submit"
                 disabled={!stripe || loading}
-                className={`w-full py-2 px-4 rounded-md font-semibold text-white transition-colors ${
-                    !stripe || loading ? "bg-gray-300 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
-                }`}
+                className="w-full bg-black text-white py-3 px-4 rounded-md font-medium hover:bg-gray-900
+                 z-5000 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
             >
-                {loading ? (
-                    <span className="flex items-center justify-center">
-            <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-            >
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-            Processing...
-          </span>
-                ) : (
-                    "Pay $20.00"
-                )}
+                {loading ? "Processing..." : "Pay"}
             </button>
-            {error && <p className="text-red-500 text-sm mt-2 animate-fade-in-down">{error}</p>}
         </form>
     )
 }
