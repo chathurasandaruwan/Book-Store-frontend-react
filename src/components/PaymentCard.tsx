@@ -1,7 +1,15 @@
+import {Card} from "./Card.tsx";
+
 interface paymentModelProps {
     isOpen: boolean;
     onClose: () => void;
 }
+import { Elements } from "@stripe/react-stripe-js"
+import {loadStripe} from "@stripe/stripe-js";
+import {CheckoutForm} from "./CheckoutForm.tsx";
+
+const stripePromise = loadStripe("your-publishable-key-here")
+
 export function PaymentCard({isOpen, onClose}: paymentModelProps) {
     if (!isOpen) return null;
     return (
@@ -16,7 +24,29 @@ export function PaymentCard({isOpen, onClose}: paymentModelProps) {
                         >
                             ✕
                         </button>
-                        <h2 className="mb-6 text-3xl font-bold text-gray-800">Payment Page</h2>
+                        <h1 className="text-3xl font-bold text-gray-800">Checkout</h1>
+                    </div>
+                    <Card title="Complete Your Purchase" description="Enter your payment details below">
+                        <Elements stripe={stripePromise}>
+                            <CheckoutForm/>
+                        </Elements>
+                    </Card>
+                    <div className="mt-4 flex justify-center text-sm text-gray-500">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                            />
+                        </svg>
+                        Payments are secure and encrypted
                     </div>
                 </div>
             </div>
