@@ -12,12 +12,26 @@ export const CheckoutForm = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        if (!stripe || !elements || !clientSecret) return
+
+        if (!stripe || !elements) {
+            console.error("Stripe.js has not loaded yet.")
+            return
+        }
+
+        if (!clientSecret) {
+            console.error("No clientSecret found.")
+            return
+        }
 
         const cardElement = elements.getElement(CardElement)
-        if (!cardElement) return
+        if (!cardElement) {
+            console.error("CardElement not found.")
+            return
+        }
 
-        dispatch(confirmCardPayment({ clientSecret, cardElement }))
+        console.log("Dispatching confirmCardPayment...", { clientSecret, cardElement })
+
+        dispatch(confirmCardPayment({ stripe, clientSecret, cardElement }))
     }
 
     useEffect(() => {

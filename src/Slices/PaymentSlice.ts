@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { loadStripe } from "@stripe/stripe-js"
-
-const stripePromise = loadStripe("your-publishable-key-here")
+import { Stripe} from "@stripe/stripe-js"
 
 export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async (_, { rejectWithValue }) => {
     try {
-        const response = await fetch("/api/payments/create-payment-intent", {
+        const response = await fetch("http://localhost:3000/api/payments/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ amount: 2000, currency: "usd" }),
@@ -16,19 +14,21 @@ export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent
         return rejectWithValue("Failed to create payment intent")
     }
 })
-
 export const confirmCardPayment = createAsyncThunk(
     "payment/confirmCardPayment",
-    async ({ clientSecret, cardElement }: { clientSecret: string; cardElement: any }, { rejectWithValue }) => {
+    async (
+        { stripe, clientSecret, cardElement }: { stripe: Stripe; clientSecret: string; cardElement: any },
+        { rejectWithValue }
+    ) => {
         try {
-            const stripe = await stripePromise
-            if (!stripe) throw new Error("Stripe not loaded")
+            if (!stripe) throw new Error("Stripe instance not found")
 
             const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardElement,
                 },
             })
+            console.log(result)
 
             if (result.error) {
                 throw new Error(result.error.message)
