@@ -4,11 +4,26 @@ import {AppDispatch, RootState} from "../store/Store.ts";
 import {FormEvent, useEffect} from "react";
 import {confirmCardPayment, createPaymentIntent} from "../Slices/PaymentSlice.ts";
 
+interface orderBookDetails {
+    bookId : string,
+    price : number,
+    quantity : number
+}
+
 export const CheckoutForm = () => {
     const stripe = useStripe()
     const elements = useElements()
     const dispatch = useDispatch<AppDispatch>()
     const { loading, error, clientSecret } = useSelector((state: RootState) => state.payment)
+    const cartItems = useSelector((state:RootState)=> state.addToCard.value)
+
+    const totalAmount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+
+    const orderedBookDetail: orderBookDetails[] = cartItems.map((item) => ({
+        bookId: item.id,
+        price: item.price,
+        quantity: item.quantity
+    }))
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -33,10 +48,21 @@ export const CheckoutForm = () => {
 
         dispatch(confirmCardPayment({ stripe, clientSecret, cardElement }))
     }
-
     useEffect(() => {
-        dispatch(createPaymentIntent())
-    }, [dispatch])
+        dispatch(createPaymentIntent({
+            amount: totalAmount * 100,
+            metadata: {
+                userId :"U00-002",
+                books: JSON.stringify(orderedBookDetail)
+            }
+        }))
+    }, [dispatch,cartItems])
+   /* useEffect(() => {
+        dispatch(createPaymentIntent()).then((res) => {
+            console.log("Payment Intent Response:", res)
+        })
+    }, [dispatch])*/
+
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">

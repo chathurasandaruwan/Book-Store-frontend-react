@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { Stripe} from "@stripe/stripe-js"
 
-export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async (_, { rejectWithValue }) => {
+export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async ({ amount, metadata }: { amount: number; metadata: any }, { rejectWithValue }) => {
     try {
+        console.log(metadata.books)
         const response = await fetch("http://localhost:3000/api/payments/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount: 2000, currency: "usd" }),
+            body: JSON.stringify({
+                amount: amount,
+                currency: "usd",
+                metadata: metadata
+            }),
         })
         const data = await response.json()
         return data.clientSecret
@@ -28,7 +33,6 @@ export const confirmCardPayment = createAsyncThunk(
                     card: cardElement,
                 },
             })
-            console.log(result)
 
             if (result.error) {
                 throw new Error(result.error.message)
