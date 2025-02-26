@@ -7,16 +7,14 @@ interface paymentModelProps {
 import { Elements } from "@stripe/react-stripe-js"
 import {loadStripe} from "@stripe/stripe-js";
 import {CheckoutForm} from "./CheckoutForm.tsx";
-import {useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {RootState} from "../store/Store.ts";
 
 const stripePromise = loadStripe("pk_test_51QwRZEFT0e4jydPMcUjKdYQNs7IOymtlgQQDjsXxKq52nSRyeNEAgY6pgd6YGPhp7lKS3STzcgo9LFNJHinTB7JU00uxGpfuMJ")
 
 export function PaymentCard({isOpen, onClose}: paymentModelProps) {
     const isPaymentSuccess = useSelector((state: RootState) => state.payment.isSuccess);
-    if (isPaymentSuccess){
-        onClose();
-    }
+    if (isPaymentSuccess) onClose();
     if (!isOpen) return null;
     return (
         <div className="fixed flex w-full z-50 h-screen items-center justify-center glass-effect inset-0 p-4">

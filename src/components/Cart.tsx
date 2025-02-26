@@ -3,7 +3,7 @@ import Auth from "./Auth.tsx";
 import {PaymentCard} from "./PaymentCard.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../store/Store.ts";
-import {removeFromCart, updateQuantity} from "../Slices/AddToCartSlice.ts";
+import {removeFromCart, setEmptyCart, updateQuantity} from "../Slices/AddToCartSlice.ts";
 
 interface CartProps {
     isOpen: boolean;
@@ -16,6 +16,11 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const dispatch = useDispatch<AppDispatch>();
     const items = useSelector((state:RootState) => state.addToCard.value);
     const AllBooks = useSelector((state:RootState) => state.bookData.books);
+    const isPaymentSuccess = useSelector((state: RootState) => state.payment.isSuccess);
+    if (isPaymentSuccess) {
+        onClose();
+        dispatch(setEmptyCart());
+    }
 
     const handleQuantityChange = (id: string, quantity: number) => {
         const stock:number = AllBooks.find((book) => book.id === id)?.stock || 0;

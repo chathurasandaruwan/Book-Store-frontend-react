@@ -30,8 +30,11 @@ const AddToCartSlice = createSlice({
 
             });
         },
+        setEmptyCart: (state) => {
+            state.value = initialState
+        },
     },
 });
 
-export const {addToCart,removeFromCart,updateQuantity} = AddToCartSlice.actions;
+export const {addToCart,removeFromCart,updateQuantity,setEmptyCart} = AddToCartSlice.actions;
 export default AddToCartSlice.reducer

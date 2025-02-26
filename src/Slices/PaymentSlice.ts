@@ -3,8 +3,8 @@ import { Stripe} from "@stripe/stripe-js"
 import {toast} from "react-toastify";
 
 export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async ({ amount, metadata }: { amount: number; metadata: any }, { rejectWithValue }) => {
+    if (metadata.books === undefined || metadata.books.length === 0) return
     try {
-        console.log(metadata.books)
         const response = await fetch("http://localhost:3000/api/payments/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -60,18 +60,22 @@ const paymentSlice = createSlice({
             .addCase(createPaymentIntent.pending, (state) => {
                 state.loading = true
                 state.error = null
+                state.isSuccess = false
             })
             .addCase(createPaymentIntent.fulfilled, (state, action) => {
                 state.loading = false
                 state.clientSecret = action.payload
+                state.isSuccess = false
             })
             .addCase(createPaymentIntent.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload as string
+                state.isSuccess = false
             })
             .addCase(confirmCardPayment.pending, (state) => {
                 state.loading = true
                 state.error = null
+                state.isSuccess = false
             })
             .addCase(confirmCardPayment.fulfilled, (state) => {
                 state.loading = false
@@ -81,6 +85,7 @@ const paymentSlice = createSlice({
             .addCase(confirmCardPayment.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload as string
+                state.isSuccess = false
                 toast.error(`Failed to place order: ${action.payload}`);
             })
     },
