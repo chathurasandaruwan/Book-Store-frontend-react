@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { Stripe} from "@stripe/stripe-js"
+import {toast} from "react-toastify";
 
 export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async ({ amount, metadata }: { amount: number; metadata: any }, { rejectWithValue }) => {
     try {
@@ -62,6 +63,7 @@ const paymentSlice = createSlice({
             .addCase(createPaymentIntent.fulfilled, (state, action) => {
                 state.loading = false
                 state.clientSecret = action.payload
+                toast.success("Payment created successfully!");
             })
             .addCase(createPaymentIntent.rejected, (state, action) => {
                 state.loading = false
@@ -73,10 +75,12 @@ const paymentSlice = createSlice({
             })
             .addCase(confirmCardPayment.fulfilled, (state) => {
                 state.loading = false
+                toast.success("Order placed successfully!");
             })
             .addCase(confirmCardPayment.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload as string
+                toast.error(`Failed to place order: ${action.payload}`);
             })
     },
 })

@@ -12,7 +12,7 @@ const api = axios.create({
 // get All books
 export const getBooksData = createAsyncThunk(
     'book/getBook',
-    async (arg,{ rejectWithValue })=>{
+    async (_,{ rejectWithValue })=>{
         //set delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
         try {
