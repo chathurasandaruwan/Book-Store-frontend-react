@@ -17,10 +17,18 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const items = useSelector((state:RootState) => state.addToCard.value);
     const AllBooks = useSelector((state:RootState) => state.bookData.books);
     const isPaymentSuccess = useSelector((state: RootState) => state.payment.isSuccess);
+    let total = 0;
     if (isPaymentSuccess) {
         onClose();
         dispatch(setEmptyCart());
     }
+
+    items.forEach((item) => {
+        const book = AllBooks.find((book) => book.id === item.id);
+        if (book) {
+            total += book.price * item.quantity;
+        }
+    });
 
     const handleQuantityChange = (id: string, quantity: number) => {
         const stock:number = AllBooks.find((book) => book.id === id)?.stock || 0;
@@ -31,7 +39,6 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
     const handleCheckout = () => {
         setIsAuthPageOpen(!isAuthPageOpen);
     };
-    const total = 12.97;
     return (
         <div>
             <div

@@ -2,19 +2,24 @@ import {useState} from "react";
 import { Link } from "react-router"
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import Cart from "./Cart.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../store/Store.ts";
 
 
 export function NaviBar () {
     const [isOpen, setIsOpen] = useState(false)
     const [isCartOpen, setIsCartOpen] = useState(false);
-    console.log('isCartOpen',isCartOpen)
+    // console.log('isCartOpen',isCartOpen)
+    let itemCount = 0;
+    const items = useSelector((state:RootState) => state.addToCard.value);
+    items.forEach(item => itemCount += item.quantity);
+
     const menuItems = [
         { title: "Home", href: "" },
         { title: "Books", href: "books" },
         { title: "Categories", href: "categories" },
         { title: "Contact-Us", href: "contactUs" },
     ]
-    const itemCount = 0
     return (
         <>
             <nav className=" fixed shadow-lg sticky top-0 z-50 bg-gradient-to-b from-gray-500 to-black">
