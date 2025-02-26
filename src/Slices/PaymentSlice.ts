@@ -52,6 +52,7 @@ const paymentSlice = createSlice({
         loading: false,
         error: null as string | null,
         clientSecret: null as string | null,
+        isSuccess: false,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -63,7 +64,6 @@ const paymentSlice = createSlice({
             .addCase(createPaymentIntent.fulfilled, (state, action) => {
                 state.loading = false
                 state.clientSecret = action.payload
-                toast.success("Payment created successfully!");
             })
             .addCase(createPaymentIntent.rejected, (state, action) => {
                 state.loading = false
@@ -75,6 +75,7 @@ const paymentSlice = createSlice({
             })
             .addCase(confirmCardPayment.fulfilled, (state) => {
                 state.loading = false
+                state.isSuccess = true
                 toast.success("Order placed successfully!");
             })
             .addCase(confirmCardPayment.rejected, (state, action) => {
