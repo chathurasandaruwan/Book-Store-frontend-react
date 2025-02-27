@@ -10,8 +10,8 @@ import {Book} from "../interface/Book.ts";
 
 export function Books() {
     const dispatch = useDispatch<AppDispatch>();
-    const isPaymentSuccess = useSelector((state: RootState) => state.payment.isSuccess);
-    if (isPaymentSuccess) dispatch(getBooksData());
+  /*  const isPaymentSuccess = useSelector((state: RootState) => state.payment.isSuccess);
+    if (isPaymentSuccess) dispatch(getBooksData());*/
     useEffect(() => {
         dispatch(getBooksData());
     }, [dispatch]);
