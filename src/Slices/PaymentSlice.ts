@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { Stripe} from "@stripe/stripe-js"
 import {toast} from "react-toastify";
+import {getState, RootState} from '../store/Store';
 
 export const createPaymentIntent = createAsyncThunk("payment/createPaymentIntent", async ({ amount, metadata }: { amount: number; metadata: any }, { rejectWithValue }) => {
     if (metadata.books === undefined || metadata.books.length === 0) return
+    const state: RootState = getState();
+    const token = state.userData.jwt_token;
     try {
         const response = await fetch("http://localhost:3000/api/payments/create-payment-intent", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json","Authorization": `Bearer ${token}` },
             body: JSON.stringify({
                 amount: amount,
                 currency: "usd",

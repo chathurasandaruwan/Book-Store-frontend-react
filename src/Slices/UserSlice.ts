@@ -3,7 +3,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 import {User} from "../interface/User.ts";
 import {toast} from "react-toastify";
-
+const initialUser : User = {id:"",email: "", password: "", role: "user"};
 
 const initialState = {
     jwt_token: null,
@@ -11,7 +11,7 @@ const initialState = {
     username: null,
     isAuthenticated: false,
     loading: false,
-    userDetail: null,
+    userDetail:initialUser,
 };
 
 const api = axios.create({
