@@ -9,9 +9,10 @@ import {ToastContainer} from "react-toastify";
 export function RootLayout() {
     const [loading,setLoading] = useState(false);
     const isLoadingBook: boolean = useSelector((state:RootState) => state.bookData.loading);
+    const isLoadingUser: boolean = useSelector((state:RootState) => state.userData.loading);
     useEffect(() => {
-        setLoading(isLoadingBook);
-    }, [isLoadingBook]);
+        setLoading(isLoadingBook || isLoadingUser);
+    }, [isLoadingBook,isLoadingUser]);
     return (
         <>
             <NaviBar/>

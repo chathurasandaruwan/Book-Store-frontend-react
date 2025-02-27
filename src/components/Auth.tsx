@@ -1,4 +1,8 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
+import {User} from "../interface/User.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../store/Store.ts";
+import {loginUser, registerUser} from "../Slices/UserSlice.ts";
 
 interface AuthModelProps {
     isOpen: boolean;
@@ -7,9 +11,16 @@ interface AuthModelProps {
 }
 export default function Auth({isOpen, onClose , action}:AuthModelProps) {
     const [isFlipped, setIsFlipped] = useState(false)
-    /*console.log("Auth isOpen", isOpen)*/
     const [singUpData, setSingUpData] = useState({name: "", email: "", password: ""})
     const [signInData, setSignInData] = useState({email: "", password: ""})
+    const dispatch = useDispatch<AppDispatch>();
+    const isAuthenticated = useSelector((state:RootState) => state.userData.isAuthenticated);
+    useEffect(() => {
+        if(isAuthenticated){
+            onClose();
+            action();
+        }
+    }, [isAuthenticated]);
     if (!isOpen) return null;
 
     const toggleFlip = () => setIsFlipped(!isFlipped)
@@ -29,19 +40,16 @@ export default function Auth({isOpen, onClose , action}:AuthModelProps) {
     }
     const handleSubmitSingUp = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("Form submitted:", singUpData)
+        const user:User = {name: singUpData.name, email: singUpData.email, password: singUpData.password, role: "user", status: "active"}
+        dispatch(registerUser(user));
         setSingUpData({name: "", email: "", password: ""})
-        onClose();
-        action();
     }
     const handleSubmitSignIn = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("Form submitted:", signInData)
+        const user:User = {email: signInData.email, password: signInData.password , role: "user"}
+        dispatch(loginUser(user));
         setSignInData({email: "", password: ""})
-        onClose();
-        action();
     }
-
 
     return (
         <div className="fixed flex w-full z-50 h-screen items-center justify-center glass-effect inset-0 p-4">

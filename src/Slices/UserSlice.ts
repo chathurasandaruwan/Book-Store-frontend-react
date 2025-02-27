@@ -11,6 +11,7 @@ const initialState = {
     username: null,
     isAuthenticated: false,
     loading: false,
+    userDetail: null,
 };
 
 const api = axios.create({
@@ -56,6 +57,7 @@ const userSlice = createSlice({
                 state.jwt_token = action.payload.accessToken;
                 state.isAuthenticated = true;
                 state.loading = false;
+                state.userDetail = action.payload.user;
             })
             .addCase(registerUser.rejected,(state, action)=>{
                 toast.error(`Failed to register: ${action.payload}`);
@@ -73,6 +75,7 @@ const userSlice = createSlice({
                 state.refresh_token = action.payload.refreshToken;
                 state.isAuthenticated = true;
                 state.loading = false;
+                state.userDetail = action.payload.user;
             })
             .addCase(loginUser.pending,(state)=>{
                 state.isAuthenticated = false;
